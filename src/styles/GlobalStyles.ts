@@ -9,6 +9,7 @@ html {
     --text-color : #202124;
     --background-color : #F0EBF8;
     --primary-color: #673AB7;
+    --border-color: #DADCE0;
 }
 
 body {
@@ -37,6 +38,7 @@ input, textarea {
   -webkit-user-select: auto;
   -ms-user-select: auto;
   user-select: auto;
+  color: var(--text-color);
 }
 
 input:focus {
