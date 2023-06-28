@@ -15,13 +15,11 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     updateFormTitle: (state, action) => {
-      const { title } = action.payload;
-      state.title = title;
+      state.title = action.payload;
     },
 
     updateFormDescription: (state, action) => {
-      const { description } = action.payload;
-      state.description = description;
+      state.description = action.payload;
     },
   },
 });
