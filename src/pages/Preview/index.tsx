@@ -6,24 +6,24 @@ import { RootState } from "../../store";
 import QuestionTemplate from "../../components/QuestionTemplate";
 const Preview = () => {
   const { title, description } = useSelector((state: RootState) => state.form);
+  const { questions } = useSelector((state: RootState) => state.question);
 
   return (
     <S.PreviewContainer>
       <TitleContainer
         formPreferences={{ title: title, description: description }}
       />
-      <QuestionTemplate
-        id={1}
-        qType="SHORT_ANSWER_TYPE"
-        isRequired={true}
-        hasOptions={false}
-      />
-      <QuestionTemplate
-        id={2}
-        qType="LONG_ANSWER_TYPE"
-        isRequired={true}
-        hasOptions={false}
-      />
+      {questions &&
+        questions.length > 0 &&
+        questions.map((item) => (
+          <QuestionTemplate
+            key={item.id}
+            id={item.id}
+            qType={item.qType}
+            isRequired={item.isRequired}
+            hasOptions={item.hasOptions}
+          />
+        ))}
     </S.PreviewContainer>
   );
 };
