@@ -3,6 +3,8 @@ import * as S from "./style";
 import TitleContainer from "../../components/TitleContainer";
 import { useDispatch } from "react-redux";
 import { updateFormDescription, updateFormTitle } from "../../reducers/form";
+import QuestionTemplate from "../../components/QuestionTemplate";
+import TextualQuestion from "../../components/textualQuestion";
 const Main = () => {
   const dispatch = useDispatch();
   const [formPreferences, setFormPreferences] = React.useState({
@@ -32,6 +34,18 @@ const Main = () => {
         formPreferences={formPreferences}
         handleOnChange={handleOnChangeFormPreferences}
         handleOnBlur={handleOnBlur}
+      />
+      <QuestionTemplate
+        id={1}
+        qType="SHORT_ANSWER_TYPE"
+        isRequired={true}
+        hasOptions={false}
+      />
+      <QuestionTemplate
+        id={2}
+        qType="LONG_ANSWER_TYPE"
+        isRequired={true}
+        hasOptions={false}
       />
     </S.MainContainer>
   );
