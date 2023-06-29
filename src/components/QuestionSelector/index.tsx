@@ -1,15 +1,28 @@
 import * as React from "react";
 import * as S from "./style";
 import { questions } from "../../data/questionList";
+import { questionTypes } from "../../data/questionTypes";
 
-const QuestionSelector = () => {
-  const [currentValue, setCurrentValue] = React.useState(questions[0].name);
+interface QuestionSelectorProps {
+  setQuestionType: (value: string) => void;
+  questionType: string;
+}
+
+const QuestionSelector = ({
+  setQuestionType,
+  questionType,
+}: QuestionSelectorProps) => {
+  const [currentValue, setCurrentValue] = React.useState(
+    questionTypes[questionType]
+  );
   const [showOptions, setShowOptions] = React.useState(false);
 
   const handleOnChangeSelectValue = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     const value = target.getAttribute("value");
+    const type = target.getAttribute("type");
     setCurrentValue(value || "");
+    setQuestionType(type || "");
   };
 
   return (
@@ -19,6 +32,7 @@ const QuestionSelector = () => {
         {questions.map((data) => (
           <S.Option
             key={data.qType}
+            type={data.qType}
             value={data.name}
             onClick={handleOnChangeSelectValue}
             current={currentValue === data.name ? "current" : ""}

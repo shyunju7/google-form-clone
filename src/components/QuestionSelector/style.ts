@@ -6,6 +6,7 @@ interface SelectBoxProps {
 
 interface SelectOptionProps {
   current: string;
+  type: string;
 }
 
 export const SelectBox = styled.div`
