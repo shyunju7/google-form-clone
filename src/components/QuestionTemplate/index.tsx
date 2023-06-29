@@ -10,6 +10,8 @@ import question, {
   updateQuestionType,
 } from "../../reducers/question";
 import SelectiveQuestion from "../SelectiveQuestion";
+import { MdDelete } from "@react-icons/all-files/md/MdDelete";
+import { MdContentCopy } from "@react-icons/all-files/md/MdContentCopy";
 
 interface QuestionTemplateProps {
   id: number;
@@ -79,7 +81,13 @@ const QuestionTemplate = ({
       ) : (
         <SelectiveQuestion id={id} qType={questionType} options={options} />
       )}
-      {!isPreview && <S.QuestionFooter></S.QuestionFooter>}
+      {!isPreview && (
+        <S.QuestionFooter>
+          <MdDelete />
+          <MdContentCopy />
+          <div>toggle button</div>
+        </S.QuestionFooter>
+      )}
     </S.QuestionContainer>
   );
 };

@@ -72,7 +72,15 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
           </ul>
         );
       case "DROPDOWN_TYPE":
-        return (
+        return isPreview ? (
+          <select>
+            {options.map((item, index) => (
+              <option key={index} value={item.uid}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        ) : (
           <ul>
             {options.map((item, index) => (
               <li key={index} value={item.uid}>
