@@ -7,9 +7,12 @@ const GlobalStyle = createGlobalStyle`
 
 html {
     --text-color : #202124;
+    --hint-text-color : #666666;
     --background-color : #F0EBF8;
     --primary-color: #673AB7;
     --border-color: #DADCE0;
+    --input-background-color : #F8F9FA;
+    --input-hint-color: #9BA0A5;
 }
 
 body {
@@ -39,6 +42,11 @@ input, textarea {
   -ms-user-select: auto;
   user-select: auto;
   color: var(--text-color);
+ 
+}
+
+input::placeholder {
+  color: var(--input-hint-color);
 }
 
 input:focus {
