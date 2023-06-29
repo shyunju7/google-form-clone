@@ -10,6 +10,7 @@ const Main = () => {
   const SHORT_ANSWER_TYPE = "SHORT_ANSWER_TYPE";
   const questionId = React.useRef<number>(0);
   const dispatch = useDispatch();
+  const scrollRef = React.useRef<HTMLDivElement>(null);
   const questions = useSelector((state: RootState) => state.question);
   const { title, description } = useSelector((state: RootState) => state.form);
   const [formPreferences, setFormPreferences] = React.useState({
@@ -42,10 +43,14 @@ const Main = () => {
       options: [],
     };
     dispatch(addQuestion(nQuestion));
+
+    if (scrollRef.current) {
+      window.scrollTo(0, scrollRef.current.scrollHeight);
+    }
   };
 
   return (
-    <S.MainContainer>
+    <S.MainContainer ref={scrollRef}>
       <TitleContainer
         formPreferences={formPreferences}
         handleOnChange={handleOnChangeFormPreferences}
@@ -65,7 +70,10 @@ const Main = () => {
           />
         ))}
 
-      <button onClick={handleOnClickAddQuestion}>추가</button>
+      <a href="/preview" target="_blank">
+        <S.PreviewButton />
+      </a>
+      <S.AddButton onClick={handleOnClickAddQuestion} />
     </S.MainContainer>
   );
 };
