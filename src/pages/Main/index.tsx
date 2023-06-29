@@ -1,15 +1,17 @@
 import * as React from "react";
 import * as S from "./style";
 import TitleContainer from "../../components/TitleContainer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateFormDescription, updateFormTitle } from "../../reducers/form";
 import QuestionTemplate from "../../components/QuestionTemplate";
 import TextualQuestion from "../../components/textualQuestion";
+import { RootState } from "../../store";
 const Main = () => {
   const dispatch = useDispatch();
+  const { title, description } = useSelector((state: RootState) => state.form);
   const [formPreferences, setFormPreferences] = React.useState({
-    title: "제목 없는 설문지",
-    description: "",
+    title,
+    description,
   });
 
   const handleOnChangeFormPreferences = (name: string, value: string) => {
