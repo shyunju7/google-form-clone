@@ -13,16 +13,24 @@ export const SelectBox = styled.div`
   position: relative;
   width: 13rem;
   height: 3rem;
-  padding: 0.5rem 3rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   background-color: #ffffff;
   align-self: center;
   border: 1px solid var(--border-color);
   cursor: pointer;
 
+  .label_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   label {
     font-size: 1rem;
     line-height: 1.8rem;
+    background-color: transparent;
+    margin-left: 0.5rem;
   }
 `;
 
@@ -45,7 +53,7 @@ export const SelectOptions = styled.ul<SelectBoxProps>`
 export const Option = styled.li<SelectOptionProps>`
   font-size: 1rem;
   height: 3rem;
-  padding: 0.5rem 1.625rem 0.5rem 3rem;
+  padding: 0.5rem 1.625rem 0.5rem 1rem;
   background-color: ${(props) =>
     props.current === "current" ? "#EFF4FD" : "transparent"};
   line-height: 1.9;
