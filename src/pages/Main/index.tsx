@@ -10,7 +10,7 @@ const Main = () => {
   const SHORT_ANSWER_TYPE = "SHORT_ANSWER_TYPE";
   const questionId = React.useRef<number>(0);
   const dispatch = useDispatch();
-  const { questions } = useSelector((state: RootState) => state.question);
+  const questions = useSelector((state: RootState) => state.question);
   const { title, description } = useSelector((state: RootState) => state.form);
   const [formPreferences, setFormPreferences] = React.useState({
     title,
@@ -57,6 +57,7 @@ const Main = () => {
             key={item.id}
             id={item.id}
             qType={item.qType}
+            query={item.query}
             isRequired={item.isRequired}
             hasOptions={item.hasOptions}
           />

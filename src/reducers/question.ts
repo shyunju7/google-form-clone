@@ -13,23 +13,25 @@ interface QuestionProps {
   options?: Array<QuestionOptionProps>;
 }
 
-interface QuestionListProps {
-  questions: Array<QuestionProps>;
-}
-
-const initialState: QuestionListProps = {
-  questions: [],
-};
+const initialState: QuestionProps[] = [];
 
 export const questionSlice = createSlice({
   name: "question",
   initialState,
   reducers: {
     addQuestion: (state, action) => {
-      state.questions.push(action.payload);
+      state.push(action.payload);
+    },
+    updateQuestionQuery: (state, action) => {
+      const { id, query } = action.payload;
+      const question = state.find((item) => item.id === id);
+
+      if (question) {
+        question.query = query;
+      }
     },
   },
 });
 
-export const { addQuestion } = questionSlice.actions;
+export const { addQuestion, updateQuestionQuery } = questionSlice.actions;
 export default questionSlice.reducer;

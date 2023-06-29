@@ -6,7 +6,12 @@ import { RootState } from "../../store";
 import QuestionTemplate from "../../components/QuestionTemplate";
 const Preview = () => {
   const { title, description } = useSelector((state: RootState) => state.form);
-  const { questions } = useSelector((state: RootState) => state.question);
+  const questions = useSelector((state: RootState) => state.question);
+
+  React.useEffect(() => {
+    console.log("hello/");
+    console.log(questions);
+  }, [questions]);
 
   return (
     <S.PreviewContainer>
@@ -20,6 +25,7 @@ const Preview = () => {
             key={item.id}
             id={item.id}
             qType={item.qType}
+            query={item.query}
             isRequired={item.isRequired}
             hasOptions={item.hasOptions}
           />
