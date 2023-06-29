@@ -38,7 +38,6 @@ const QuestionTemplate = ({
   };
 
   React.useEffect(() => {
-    console.log("타입 변경");
     dispatch(updateQuestionType({ id, qType: questionType }));
   }, [questionType]);
 
