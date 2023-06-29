@@ -28,6 +28,7 @@ const Preview = () => {
             query={item.query}
             isRequired={item.isRequired}
             hasOptions={item.hasOptions}
+            options={item.options}
           />
         ))}
     </S.PreviewContainer>

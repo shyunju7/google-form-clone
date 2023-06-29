@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-interface QuestionOptionProps {
+export interface QuestionOptionProps {
+  uid: number;
   name: string;
-  value: string;
 }
 
 interface QuestionProps {
@@ -10,7 +10,7 @@ interface QuestionProps {
   query: string;
   isRequired: boolean;
   hasOptions: boolean;
-  options?: Array<QuestionOptionProps>;
+  options: QuestionOptionProps[];
 }
 
 const initialState: QuestionProps[] = [];
@@ -48,16 +48,35 @@ export const questionSlice = createSlice({
           case "DROPDOWN_TYPE":
             question.qType = qType;
             question.hasOptions = true;
+            question.options = [];
+            question.options.push({
+              uid: 1,
+              name: "옵션 1",
+            });
             break;
-
           default:
             break;
         }
       }
     },
+    addQuestionOptions: (state, action) => {
+      const { id, name } = action.payload;
+      const question = state.find((item) => item.id === id);
+      const length = question && question.options.length;
+      length &&
+        length > 0 &&
+        question.options?.push({
+          uid: length,
+          name,
+        });
+    },
   },
 });
 
-export const { addQuestion, updateQuestionQuery, updateQuestionType } =
-  questionSlice.actions;
+export const {
+  addQuestion,
+  updateQuestionQuery,
+  updateQuestionType,
+  addQuestionOptions,
+} = questionSlice.actions;
 export default questionSlice.reducer;

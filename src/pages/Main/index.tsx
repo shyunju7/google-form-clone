@@ -39,6 +39,7 @@ const Main = () => {
       query: "",
       isRequired: false,
       hasOptions: false,
+      options: [],
     };
     dispatch(addQuestion(nQuestion));
   };
@@ -60,6 +61,7 @@ const Main = () => {
             query={item.query}
             isRequired={item.isRequired}
             hasOptions={item.hasOptions}
+            options={item.options}
           />
         ))}
 

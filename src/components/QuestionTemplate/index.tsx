@@ -1,13 +1,15 @@
 import * as React from "react";
 import * as S from "./style";
 import QuestionSelector from "../QuestionSelector";
-import TextualQuestion from "../textualQuestion";
+import TextualQuestion from "../TextualQuestion";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
+import question, {
+  QuestionOptionProps,
   updateQuestionQuery,
   updateQuestionType,
 } from "../../reducers/question";
+import SelectiveQuestion from "../SelectiveQuestion";
 
 interface QuestionTemplateProps {
   id: number;
@@ -15,7 +17,7 @@ interface QuestionTemplateProps {
   query: string;
   isRequired: boolean;
   hasOptions: boolean;
-  options?: Array<string>;
+  options?: QuestionOptionProps[];
 }
 
 const QuestionTemplate = ({
@@ -24,7 +26,7 @@ const QuestionTemplate = ({
   query = "",
   isRequired,
   hasOptions,
-  options,
+  options = [],
 }: QuestionTemplateProps) => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -75,7 +77,7 @@ const QuestionTemplate = ({
       {!hasOptions ? (
         <TextualQuestion qType={questionType} />
       ) : (
-        <div>옵션 있는 컴포넌트</div>
+        <SelectiveQuestion id={id} qType={questionType} options={options} />
       )}
       {!isPreview && <S.QuestionFooter></S.QuestionFooter>}
     </S.QuestionContainer>
