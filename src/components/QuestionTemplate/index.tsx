@@ -38,12 +38,15 @@ const QuestionTemplate = ({
     <S.QuestionContainer>
       <S.QuestionCreator>
         <input
-          className={`question_input ${
+          id={`question_${id}`}
+          className={`question_input  ${
             isPreview ? "question_input_preview" : "question_input_main"
           }`}
           type="text"
           placeholder="질문"
-          value={queryValue}
+          value={
+            !isPreview ? queryValue : isRequired ? queryValue + "*" : queryValue
+          }
           readOnly={isPreview}
           onChange={handleOnChangeValue}
           onBlur={() => {
