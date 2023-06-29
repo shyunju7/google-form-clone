@@ -11,7 +11,7 @@ export const questions = [
   },
   {
     id: 3,
-    name: "객관식",
+    name: "객관식 질문",
     qType: "MULTIPLE_CHOICE_TYPE",
   },
   {

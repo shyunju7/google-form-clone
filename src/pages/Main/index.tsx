@@ -4,10 +4,13 @@ import TitleContainer from "../../components/TitleContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { updateFormDescription, updateFormTitle } from "../../reducers/form";
 import QuestionTemplate from "../../components/QuestionTemplate";
-import TextualQuestion from "../../components/textualQuestion";
 import { RootState } from "../../store";
+import { addQuestion } from "../../reducers/question";
 const Main = () => {
+  const SHORT_ANSWER_TYPE = "SHORT_ANSWER_TYPE";
+  const questionId = React.useRef<number>(0);
   const dispatch = useDispatch();
+  const { questions } = useSelector((state: RootState) => state.question);
   const { title, description } = useSelector((state: RootState) => state.form);
   const [formPreferences, setFormPreferences] = React.useState({
     title,
@@ -15,7 +18,6 @@ const Main = () => {
   });
 
   const handleOnChangeFormPreferences = (name: string, value: string) => {
-    console.log(name, value);
     setFormPreferences({
       ...formPreferences,
       [name]: value,
@@ -30,6 +32,17 @@ const Main = () => {
     dispatch(updateFormDescription(value));
   };
 
+  const handleOnClickAddQuestion = () => {
+    const nQuestion = {
+      id: questionId.current++,
+      qType: SHORT_ANSWER_TYPE,
+      query: "",
+      isRequired: false,
+      hasOptions: false,
+    };
+    dispatch(addQuestion(nQuestion));
+  };
+
   return (
     <S.MainContainer>
       <TitleContainer
@@ -37,18 +50,19 @@ const Main = () => {
         handleOnChange={handleOnChangeFormPreferences}
         handleOnBlur={handleOnBlur}
       />
-      <QuestionTemplate
-        id={1}
-        qType="SHORT_ANSWER_TYPE"
-        isRequired={true}
-        hasOptions={false}
-      />
-      <QuestionTemplate
-        id={2}
-        qType="LONG_ANSWER_TYPE"
-        isRequired={true}
-        hasOptions={false}
-      />
+      {questions &&
+        questions.length > 0 &&
+        questions.map((item) => (
+          <QuestionTemplate
+            key={item.id}
+            id={item.id}
+            qType={item.qType}
+            isRequired={item.isRequired}
+            hasOptions={item.hasOptions}
+          />
+        ))}
+
+      <button onClick={handleOnClickAddQuestion}>추가</button>
     </S.MainContainer>
   );
 };

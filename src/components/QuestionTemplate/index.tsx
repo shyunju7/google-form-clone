@@ -20,6 +20,7 @@ const QuestionTemplate = ({
   options,
 }: QuestionTemplateProps) => {
   const location = useLocation();
+  const [questionType, setQuestionType] = React.useState(qType);
 
   const isPreview = location.pathname === "/preview";
 
@@ -34,10 +35,15 @@ const QuestionTemplate = ({
           placeholder="질문"
           readOnly={isPreview}
         />
-        {!isPreview && <QuestionSelector />}
+        {!isPreview && (
+          <QuestionSelector
+            setQuestionType={setQuestionType}
+            questionType={questionType}
+          />
+        )}
       </S.QuestionCreator>
       {!hasOptions ? (
-        <TextualQuestion qType={qType} />
+        <TextualQuestion qType={questionType} />
       ) : (
         <div>옵션 있는 컴포넌트</div>
       )}
