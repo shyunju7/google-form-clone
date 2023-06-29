@@ -1,5 +1,9 @@
 import { styled } from "styled-components";
 
+interface InputProps {
+  path: string;
+}
+
 export const TitleWrapper = styled.div`
   width: 100%;
   height: 8.5rem;
@@ -15,14 +19,16 @@ export const TitleWrapper = styled.div`
   box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<InputProps>`
   width: 100%;
   max-width: 45rem;
   border: none;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: ${(props) =>
+    props.path !== "/preview" && "1px solid var(--border-color)"};
 
   &:focus {
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: ${(props) =>
+      props.path !== "/preview" && "2px solid var(--primary-color)"};
   }
 
   &.input_title {
