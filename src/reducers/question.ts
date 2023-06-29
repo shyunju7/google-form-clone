@@ -30,8 +30,34 @@ export const questionSlice = createSlice({
         question.query = query;
       }
     },
+    updateQuestionType: (state, action) => {
+      const { id, qType } = action.payload;
+      const question = state.find((item) => item.id === id);
+
+      if (question) {
+        switch (qType) {
+          case "SHORT_ANSWER_TYPE":
+          case "LONG_ANSWER_TYPE":
+            question.qType = qType;
+            question.hasOptions = false;
+            question.options = [];
+            break;
+
+          case "MULTIPLE_CHOICE_TYPE":
+          case "CHECKBOX_TYPE":
+          case "DROPDOWN_TYPE":
+            question.qType = qType;
+            question.hasOptions = true;
+            break;
+
+          default:
+            break;
+        }
+      }
+    },
   },
 });
 
-export const { addQuestion, updateQuestionQuery } = questionSlice.actions;
+export const { addQuestion, updateQuestionQuery, updateQuestionType } =
+  questionSlice.actions;
 export default questionSlice.reducer;

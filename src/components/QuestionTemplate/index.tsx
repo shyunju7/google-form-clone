@@ -4,7 +4,10 @@ import QuestionSelector from "../QuestionSelector";
 import TextualQuestion from "../textualQuestion";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateQuestionQuery } from "../../reducers/question";
+import {
+  updateQuestionQuery,
+  updateQuestionType,
+} from "../../reducers/question";
 
 interface QuestionTemplateProps {
   id: number;
@@ -33,6 +36,11 @@ const QuestionTemplate = ({
   const handleOnChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQueryValue(e.target.value);
   };
+
+  React.useEffect(() => {
+    console.log("타입 변경");
+    dispatch(updateQuestionType({ id, qType: questionType }));
+  }, [questionType]);
 
   return (
     <S.QuestionContainer>
