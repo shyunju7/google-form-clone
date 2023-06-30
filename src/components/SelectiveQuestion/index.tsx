@@ -1,7 +1,9 @@
 import * as React from "react";
+import * as S from "./style";
 import {
   QuestionOptionProps,
   addQuestionOptions,
+  updateQuestionOption,
 } from "../../reducers/question";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -31,44 +33,65 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
     switch (qType) {
       case "MULTIPLE_CHOICE_TYPE":
         return (
-          <ul>
+          <ul className="question_options">
             {options.map((item, index) => (
               <li key={index}>
-                <input type="radio" value={item.uid} />
-                {item.name}
+                <input type="radio" value={item.uid} name={id.toString()} />
+                <input
+                  type="text"
+                  value={item.name}
+                  onChange={({
+                    target: { value },
+                  }: React.ChangeEvent<HTMLInputElement>) =>
+                    dispatch(
+                      updateQuestionOption({
+                        id,
+                        uid: item.uid,
+                        name: value,
+                      })
+                    )
+                  }
+                  readOnly={isPreview}
+                />
               </li>
             ))}
-            <div>
-              <input
-                type="text"
-                value={nOption}
-                onChange={({
-                  target: { value },
-                }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
-              />
-              <button onClick={handleOnClickAddOption}>추가</button>
-            </div>
+            {!isPreview && (
+              <div>
+                <input type="radio" />
+                <input
+                  className="add_option_input"
+                  type="text"
+                  placeholder="옵션 추가"
+                  onFocus={handleOnClickAddOption}
+                  onChange={({
+                    target: { value },
+                  }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
+                />
+              </div>
+            )}
           </ul>
         );
       case "CHECKBOX_TYPE":
         return (
-          <ul>
+          <ul className="question_options">
             {options.map((item, index) => (
               <li key={index}>
                 <input type="checkbox" value={item.uid} />
                 {item.name}
               </li>
             ))}
-            <div>
-              <input
-                type="text"
-                value={nOption}
-                onChange={({
-                  target: { value },
-                }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
-              />
-              <button onClick={handleOnClickAddOption}>추가</button>
-            </div>
+            {!isPreview && (
+              <div>
+                <input
+                  type="text"
+                  value={nOption}
+                  onChange={({
+                    target: { value },
+                  }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
+                />
+                <button onClick={handleOnClickAddOption}>추가</button>
+              </div>
+            )}
           </ul>
         );
       case "DROPDOWN_TYPE":
@@ -81,29 +104,35 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
             ))}
           </select>
         ) : (
-          <ul>
+          <ul className="question_options">
             {options.map((item, index) => (
               <li key={index} value={item.uid}>
                 {item.name}
               </li>
             ))}
-            <div>
-              <input
-                type="text"
-                value={nOption}
-                onChange={({
-                  target: { value },
-                }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
-              />
-              <button onClick={handleOnClickAddOption}>추가</button>
-            </div>
+            {!isPreview && (
+              <div>
+                <input
+                  type="text"
+                  value={nOption}
+                  onChange={({
+                    target: { value },
+                  }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
+                />
+                <button onClick={handleOnClickAddOption}>추가</button>
+              </div>
+            )}
           </ul>
         );
       default:
         return;
     }
   };
-  return <div>{handleMakeOptions()}</div>;
+  return (
+    <S.SelectiveQuestionContainer>
+      {handleMakeOptions()}
+    </S.SelectiveQuestionContainer>
+  );
 };
 
 export default SelectiveQuestion;

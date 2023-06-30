@@ -98,7 +98,7 @@ export const questionSlice = createSlice({
       length &&
         length > 0 &&
         question.options?.push({
-          uid: length,
+          uid: length + 1,
           name,
         });
     },
