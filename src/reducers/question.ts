@@ -35,8 +35,6 @@ export const questionSlice = createSlice({
       const question = state.find((item) => item.id === id);
 
       if (question) {
-        console.log("updated? ", qType);
-
         switch (qType) {
           case "SHORT_ANSWER_TYPE":
           case "LONG_ANSWER_TYPE":
@@ -71,6 +69,15 @@ export const questionSlice = createSlice({
           uid: length,
           name,
         });
+    },
+    updateQuestionOption: (state, action) => {
+      const { id, uid, name: nName } = action.payload;
+      const question = state.find((item) => item.id === id);
+      if (question) {
+        question.options = question.options.map((option) =>
+          option.uid === uid ? { ...option, name: nName } : option
+        );
+      }
     },
   },
 });
