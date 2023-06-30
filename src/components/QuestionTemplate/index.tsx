@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   QuestionOptionProps,
+  copyQuestion,
   deleteQuestion,
   updateQuestionQuery,
   updateQuestionType,
@@ -51,8 +52,11 @@ const QuestionTemplate = ({
   };
 
   const handleOnClickDeleteButton = () => {
-    console.log("삭제!");
     dispatch(deleteQuestion({ id }));
+  };
+
+  const handleOnClickCopyButton = () => {
+    dispatch(copyQuestion({ id }));
   };
 
   return (
@@ -94,7 +98,11 @@ const QuestionTemplate = ({
       {!isPreview && (
         <S.QuestionFooter>
           <div className="question_footer_wrapper">
-            <MdContentCopy size="24" color="var(--hint-text-color)" />
+            <MdContentCopy
+              size="24"
+              color="var(--hint-text-color)"
+              onClick={handleOnClickCopyButton}
+            />
             <MdDelete
               size="24"
               color="var(--hint-text-color)"

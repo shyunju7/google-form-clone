@@ -8,7 +8,6 @@ import { RootState } from "../../store";
 import { addQuestion } from "../../reducers/question";
 const Main = () => {
   const SHORT_ANSWER_TYPE = "SHORT_ANSWER_TYPE";
-  const questionId = React.useRef<number>(0);
   const dispatch = useDispatch();
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const questions = useSelector((state: RootState) => state.question);
@@ -35,7 +34,6 @@ const Main = () => {
 
   const handleOnClickAddQuestion = () => {
     const nQuestion = {
-      id: questionId.current++,
       qType: SHORT_ANSWER_TYPE,
       query: "",
       isRequired: false,

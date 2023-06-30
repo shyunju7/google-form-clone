@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+
+let questionId = 0;
+
 export interface QuestionOptionProps {
   uid: number;
   name: string;
@@ -20,7 +23,10 @@ export const questionSlice = createSlice({
   initialState,
   reducers: {
     addQuestion: (state, action) => {
-      state.push(action.payload);
+      state.push({
+        id: questionId++,
+        ...action.payload,
+      });
     },
     updateQuestionQuery: (state, action) => {
       const { id, query } = action.payload;
@@ -63,7 +69,19 @@ export const questionSlice = createSlice({
       const { id } = action.payload;
       return state.filter((question) => question.id !== id);
     },
-
+    copyQuestion: (state, action) => {
+      const { id } = action.payload;
+      const question = state.find((item) => item.id === id);
+      question &&
+        state.push({
+          id: questionId++,
+          qType: question.qType,
+          query: question.query,
+          isRequired: question.isRequired,
+          hasOptions: question.hasOptions,
+          options: question.options,
+        });
+    },
     addQuestionOptions: (state, action) => {
       const { id, name } = action.payload;
       const question = state.find((item) => item.id === id);
@@ -92,6 +110,7 @@ export const {
   updateQuestionQuery,
   updateQuestionType,
   deleteQuestion,
+  copyQuestion,
   addQuestionOptions,
   updateQuestionOption,
 } = questionSlice.actions;
