@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   QuestionOptionProps,
+  changeRequiredProperty,
   copyQuestion,
   deleteQuestion,
   updateQuestionQuery,
@@ -59,6 +60,11 @@ const QuestionTemplate = ({
     dispatch(copyQuestion({ id }));
   };
 
+  const handleOnClickRequiredButton = () => {
+    setRequiredValue((prev) => !prev);
+    dispatch(changeRequiredProperty({ id }));
+  };
+
   return (
     <S.QuestionContainer path={location.pathname}>
       <S.QuestionCreator>
@@ -110,7 +116,7 @@ const QuestionTemplate = ({
             />
             <div
               className="question_footer_required_label"
-              onClick={() => setRequiredValue((prev) => !prev)}
+              onClick={handleOnClickRequiredButton}
             >
               필수
               {requiredValue ? (

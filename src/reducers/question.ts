@@ -84,6 +84,13 @@ export const questionSlice = createSlice({
         state.splice(index + 1, 0, nQuestion);
       }
     },
+    changeRequiredProperty: (state, action) => {
+      const { id } = action.payload;
+      const question = state.find((item) => item.id === id);
+      if (question) {
+        question.isRequired = !question.isRequired;
+      }
+    },
     addQuestionOptions: (state, action) => {
       const { id, name } = action.payload;
       const question = state.find((item) => item.id === id);
@@ -113,6 +120,7 @@ export const {
   updateQuestionType,
   deleteQuestion,
   copyQuestion,
+  changeRequiredProperty,
   addQuestionOptions,
   updateQuestionOption,
 } = questionSlice.actions;
