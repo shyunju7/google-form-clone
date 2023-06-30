@@ -56,8 +56,6 @@ export const Option = styled.li<SelectOptionProps>`
   padding: 0.5rem 1.625rem 0.5rem 1rem;
   background-color: ${(props) =>
     props.current === "current" ? "#EFF4FD" : "transparent"};
-  line-height: 1.9;
-
   &:hover {
     background-color: #eeeeee;
   }

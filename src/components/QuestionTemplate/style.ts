@@ -1,10 +1,13 @@
 import { styled } from "styled-components";
 
-export const QuestionContainer = styled.div`
+export const QuestionContainer = styled.div<{ path: string }>`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 1.375rem 1.5rem 0 1.5rem;
+  padding: ${(props) =>
+    props.path === "/"
+      ? "1.375rem 1.5rem 0 1.5rem"
+      : "1.375rem 1.5rem 1.5rem 1.5rem"};
   background-color: white;
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
@@ -44,9 +47,23 @@ export const QuestionCreator = styled.div`
   }
 `;
 
-export const QuestionContents = styled.div``;
 export const QuestionFooter = styled.div`
   width: 100%;
   height: 4.0625rem;
   border-top: 1px solid var(--border-color);
+
+  .question_footer_wrapper {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    float: right;
+  }
+
+  .question_footer_required_label {
+    display: flex;
+    align-items: center;
+  }
 `;

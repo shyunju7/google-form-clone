@@ -35,6 +35,8 @@ export const questionSlice = createSlice({
       const question = state.find((item) => item.id === id);
 
       if (question) {
+        console.log("updated? ", qType);
+
         switch (qType) {
           case "SHORT_ANSWER_TYPE":
           case "LONG_ANSWER_TYPE":

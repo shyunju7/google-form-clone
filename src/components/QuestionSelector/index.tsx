@@ -9,7 +9,7 @@ import { MdRadioButtonChecked } from "@react-icons/all-files/md/MdRadioButtonChe
 import { MdArrowDropDownCircle } from "@react-icons/all-files/md/MdArrowDropDownCircle";
 import { MdArrowDropDown } from "@react-icons/all-files/md/MdArrowDropDown";
 interface QuestionSelectorProps {
-  setQuestionType: (value: string) => void;
+  handleUpdateQuestionType: (value: string) => void;
   questionType: string;
 }
 
@@ -22,7 +22,7 @@ const icons = [
 ];
 
 const QuestionSelector = ({
-  setQuestionType,
+  handleUpdateQuestionType,
   questionType,
 }: QuestionSelectorProps) => {
   const [currentValue, setCurrentValue] = React.useState(
@@ -31,10 +31,14 @@ const QuestionSelector = ({
   const [showOptions, setShowOptions] = React.useState(false);
   const handleOnChangeSelectValue = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
+    console.log(target);
     const value = target.getAttribute("value");
     const type = target.getAttribute("type");
+    console.log("v: ", value);
+    console.log("t: ", type);
+    if (!value || !type) return;
     setCurrentValue(value || "");
-    setQuestionType(type || "");
+    handleUpdateQuestionType(type || "");
   };
 
   const handleMakeIcon = () => {
@@ -64,8 +68,7 @@ const QuestionSelector = ({
             onClick={handleOnChangeSelectValue}
             current={currentValue === data.name ? "current" : ""}
           >
-            {icons[index]}
-            <label>{data.name}</label>
+            {icons[index]} {data.name}
           </S.Option>
         ))}
       </S.SelectOptions>

@@ -4,7 +4,7 @@ import QuestionSelector from "../QuestionSelector";
 import TextualQuestion from "../TextualQuestion";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import question, {
+import {
   QuestionOptionProps,
   updateQuestionQuery,
   updateQuestionType,
@@ -12,6 +12,8 @@ import question, {
 import SelectiveQuestion from "../SelectiveQuestion";
 import { MdDelete } from "@react-icons/all-files/md/MdDelete";
 import { MdContentCopy } from "@react-icons/all-files/md/MdContentCopy";
+import { MdCheckBoxOutlineBlank } from "@react-icons/all-files/md/MdCheckBoxOutlineBlank";
+import { MdCheckBox } from "@react-icons/all-files/md/MdCheckBox";
 
 interface QuestionTemplateProps {
   id: number;
@@ -34,6 +36,7 @@ const QuestionTemplate = ({
   const dispatch = useDispatch();
   const [questionType, setQuestionType] = React.useState(qType);
   const [queryValue, setQueryValue] = React.useState(query);
+  const [requiredValue, setRequiredValue] = React.useState(isRequired);
 
   const isPreview = location.pathname === "/preview";
 
@@ -41,12 +44,13 @@ const QuestionTemplate = ({
     setQueryValue(e.target.value);
   };
 
-  React.useEffect(() => {
-    dispatch(updateQuestionType({ id, qType: questionType }));
-  }, [questionType]);
+  const handleUpdateQuestionType = (nType: string) => {
+    setQuestionType(nType);
+    dispatch(updateQuestionType({ id, qType: nType }));
+  };
 
   return (
-    <S.QuestionContainer>
+    <S.QuestionContainer path={location.pathname}>
       <S.QuestionCreator>
         <input
           id={`question_${id}`}
@@ -71,7 +75,7 @@ const QuestionTemplate = ({
         />
         {!isPreview && (
           <QuestionSelector
-            setQuestionType={setQuestionType}
+            handleUpdateQuestionType={handleUpdateQuestionType}
             questionType={questionType}
           />
         )}
@@ -83,9 +87,24 @@ const QuestionTemplate = ({
       )}
       {!isPreview && (
         <S.QuestionFooter>
-          <MdDelete />
-          <MdContentCopy />
-          <div>toggle button</div>
+          <div className="question_footer_wrapper">
+            <MdContentCopy size="24" color="var(--hint-text-color)" />
+            <MdDelete size="24" color="var(--hint-text-color)" />
+            <div
+              className="question_footer_required_label"
+              onClick={() => setRequiredValue((prev) => !prev)}
+            >
+              필수
+              {requiredValue ? (
+                <MdCheckBox size="24" />
+              ) : (
+                <MdCheckBoxOutlineBlank
+                  size="24"
+                  color="var(--hint-text-color)"
+                />
+              )}
+            </div>
+          </div>
         </S.QuestionFooter>
       )}
     </S.QuestionContainer>
