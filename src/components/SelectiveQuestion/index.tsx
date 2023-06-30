@@ -76,7 +76,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
           <ul className="question_options">
             {options.map((item, index) => (
               <li key={index}>
-                <input type="checkbox" value={item.uid} />
+                <input type="checkbox" value={item.uid} name={id.toString()} />
                 <input
                   type="text"
                   value={item.name === "" ? nOption : item.name}
