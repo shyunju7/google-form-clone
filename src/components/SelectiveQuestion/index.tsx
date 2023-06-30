@@ -39,7 +39,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
                 <input type="radio" value={item.uid} name={id.toString()} />
                 <input
                   type="text"
-                  value={item.name}
+                  value={item.name === "" ? nOption : item.name}
                   onChange={({
                     target: { value },
                   }: React.ChangeEvent<HTMLInputElement>) =>
@@ -77,19 +77,36 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
             {options.map((item, index) => (
               <li key={index}>
                 <input type="checkbox" value={item.uid} />
-                {item.name}
+                <input
+                  type="text"
+                  value={item.name === "" ? nOption : item.name}
+                  onChange={({
+                    target: { value },
+                  }: React.ChangeEvent<HTMLInputElement>) =>
+                    dispatch(
+                      updateQuestionOption({
+                        id,
+                        uid: item.uid,
+                        name: value,
+                      })
+                    )
+                  }
+                  readOnly={isPreview}
+                />
               </li>
             ))}
             {!isPreview && (
               <div>
                 <input
+                  className="add_option_input"
                   type="text"
                   value={nOption}
+                  placeholder="옵션 추가"
                   onChange={({
                     target: { value },
                   }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
+                  onFocus={handleOnClickAddOption}
                 />
-                <button onClick={handleOnClickAddOption}>추가</button>
               </div>
             )}
           </ul>
@@ -113,13 +130,15 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
             {!isPreview && (
               <div>
                 <input
+                  className="add_option_input"
                   type="text"
                   value={nOption}
+                  placeholder="옵션 추가"
+                  onFocus={handleOnClickAddOption}
                   onChange={({
                     target: { value },
                   }: React.ChangeEvent<HTMLInputElement>) => setNOtion(value)}
                 />
-                <button onClick={handleOnClickAddOption}>추가</button>
               </div>
             )}
           </ul>
