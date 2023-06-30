@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   QuestionOptionProps,
+  deleteQuestion,
   updateQuestionQuery,
   updateQuestionType,
 } from "../../reducers/question";
@@ -49,6 +50,11 @@ const QuestionTemplate = ({
     dispatch(updateQuestionType({ id, qType: nType }));
   };
 
+  const handleOnClickDeleteButton = () => {
+    console.log("삭제!");
+    dispatch(deleteQuestion({ id }));
+  };
+
   return (
     <S.QuestionContainer path={location.pathname}>
       <S.QuestionCreator>
@@ -89,7 +95,11 @@ const QuestionTemplate = ({
         <S.QuestionFooter>
           <div className="question_footer_wrapper">
             <MdContentCopy size="24" color="var(--hint-text-color)" />
-            <MdDelete size="24" color="var(--hint-text-color)" />
+            <MdDelete
+              size="24"
+              color="var(--hint-text-color)"
+              onClick={handleOnClickDeleteButton}
+            />
             <div
               className="question_footer_required_label"
               onClick={() => setRequiredValue((prev) => !prev)}

@@ -59,6 +59,11 @@ export const questionSlice = createSlice({
         }
       }
     },
+    deleteQuestion: (state, action) => {
+      const { id } = action.payload;
+      return state.filter((question) => question.id !== id);
+    },
+
     addQuestionOptions: (state, action) => {
       const { id, name } = action.payload;
       const question = state.find((item) => item.id === id);
@@ -86,6 +91,8 @@ export const {
   addQuestion,
   updateQuestionQuery,
   updateQuestionType,
+  deleteQuestion,
   addQuestionOptions,
+  updateQuestionOption,
 } = questionSlice.actions;
 export default questionSlice.reducer;
