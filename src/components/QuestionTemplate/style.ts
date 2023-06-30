@@ -39,11 +39,9 @@ export const QuestionCreator = styled.div`
     border-bottom: 2px solid var(--primary-color);
   }
 
-  .question_input_preview {
-    background-color: transparent;
-    border: none;
-    padding-left: 0;
-    color: var(--text-color);
+  .required_indicator {
+    color: red;
+    margin-left: 0.5rem;
   }
 `;
 

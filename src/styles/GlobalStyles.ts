@@ -49,6 +49,10 @@ input::placeholder {
   color: var(--input-hint-color);
 }
 
+textarea::placeholder {
+  color: var(--input-hint-color);
+}
+
 input:focus {
   outline: none;
 }

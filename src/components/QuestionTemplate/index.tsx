@@ -68,27 +68,30 @@ const QuestionTemplate = ({
   return (
     <S.QuestionContainer path={location.pathname}>
       <S.QuestionCreator>
-        <input
-          id={`question_${id}`}
-          className={`question_input  ${
-            isPreview ? "question_input_preview" : "question_input_main"
-          }`}
-          type="text"
-          placeholder="질문"
-          value={
-            !isPreview ? queryValue : isRequired ? queryValue + "*" : queryValue
-          }
-          readOnly={isPreview}
-          onChange={handleOnChangeValue}
-          onBlur={() => {
-            dispatch(
-              updateQuestionQuery({
-                id,
-                query: queryValue,
-              })
-            );
-          }}
-        />
+        {isPreview ? (
+          <div>
+            {queryValue}
+            <span className="required_indicator">{isRequired && "*"}</span>
+          </div>
+        ) : (
+          <input
+            id={`question_${id}`}
+            className={`question_input question_input_main}`}
+            type="text"
+            placeholder="질문"
+            value={queryValue}
+            readOnly={isPreview}
+            onChange={handleOnChangeValue}
+            onBlur={() => {
+              dispatch(
+                updateQuestionQuery({
+                  id,
+                  query: queryValue,
+                })
+              );
+            }}
+          />
+        )}
         {!isPreview && (
           <QuestionSelector
             handleUpdateQuestionType={handleUpdateQuestionType}

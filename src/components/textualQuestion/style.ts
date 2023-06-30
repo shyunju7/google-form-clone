@@ -15,8 +15,10 @@ export const TextInput = styled.input<TextProps>`
       : "1px solid var(--border-color)"};
 
   &:focus {
-    border-width: 2px;
-    border-color: var(--primary-color);
+    border-bottom: ${(props) =>
+      props.path === "/"
+        ? "1px dotted var(--text-color)"
+        : "2px solid var(--primary-color)"};
   }
 `;
 
@@ -31,7 +33,9 @@ export const Textarea = styled.textarea<TextProps>`
       : "1px solid var(--border-color)"};
 
   &:focus {
-    border-width: 2px;
-    border-color: var(--primary-color);
+    border-bottom: ${(props) =>
+      props.path === "/"
+        ? "1px dotted var(--text-color)"
+        : "2px solid var(--primary-color)"};
   }
 `;
