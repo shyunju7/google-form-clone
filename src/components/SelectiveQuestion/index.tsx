@@ -71,6 +71,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
       case "DROPDOWN_TYPE":
         OptionComponent = DropdownType;
         break;
+
       default:
         return null;
     }
