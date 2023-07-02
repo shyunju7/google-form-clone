@@ -32,7 +32,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
   const location = useLocation();
   const isPreview = location.pathname === "/preview";
 
-  const handleOnClickAddOption = () => {
+  const handleAddOption = () => {
     dispatch(
       addQuestionOptions({
         id,
@@ -49,13 +49,13 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
     dispatch(
       updateQuestionOption({
         id,
-        uid: uid,
+        uid,
         name: value,
       })
     );
   };
 
-  const handleMakeOptions = (): React.ReactNode => {
+  const handleMakeOptions = (): JSX.Element | null => {
     let OptionComponent: React.FunctionComponent<OptionComponentTypes> | null =
       null;
 
@@ -88,27 +88,37 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
     return null;
   };
 
+  const handleRenderAddOptionInput = (): JSX.Element | null => {
+    if (isPreview) return null;
+
+    let OptionInput: JSX.Element;
+
+    if (qType === "MULTIPLE_CHOICE_TYPE") {
+      OptionInput = <input type="radio" />;
+    } else if (qType === "CHECKBOX_TYPE") {
+      OptionInput = <input type="checkbox" />;
+    } else {
+      OptionInput = <label>{options.length + 1}. </label>;
+    }
+
+    return (
+      <div>
+        {OptionInput}
+        <input
+          className="add_option_input"
+          type="text"
+          placeholder="옵션 추가"
+          onFocus={handleAddOption}
+          readOnly
+        />
+      </div>
+    );
+  };
+
   return (
     <S.SelectiveQuestionContainer>
       {handleMakeOptions()}
-      {!isPreview && (
-        <div>
-          {qType === "MULTIPLE_CHOICE_TYPE" ? (
-            <input type="radio" />
-          ) : qType === "CHECKBOX_TYPE" ? (
-            <input type="checkbox" />
-          ) : (
-            <label>{options.length + 1}. </label>
-          )}
-          <input
-            className="add_option_input"
-            type="text"
-            placeholder="옵션 추가"
-            onFocus={handleOnClickAddOption}
-            readOnly
-          />
-        </div>
-      )}
+      {handleRenderAddOptionInput()}
     </S.SelectiveQuestionContainer>
   );
 };
