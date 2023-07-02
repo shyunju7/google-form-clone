@@ -5,6 +5,7 @@ export const MainContainer = styled.div`
   position: relative;
   width: 100%;
   max-width: 48.125rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +13,11 @@ export const MainContainer = styled.div`
   padding-top: 0.75rem;
   margin: 0 auto;
   background-color: transparent;
+
+  .drag_container {
+    width: 100%;
+    max-width: 48.125rem;
+  }
 `;
 
 export const AddButton = styled(MdAddCircleOutline)`

@@ -111,6 +111,15 @@ export const questionSlice = createSlice({
         );
       }
     },
+
+    dragQuestion: (state, action) => {
+      console.log("prev ", state);
+      const { from, to } = action.payload;
+      const tmp = state[from];
+      state[from] = state[to];
+      state[to] = tmp;
+      console.log("after ", state);
+    },
   },
 });
 
@@ -123,5 +132,6 @@ export const {
   changeRequiredProperty,
   addQuestionOptions,
   updateQuestionOption,
+  dragQuestion,
 } = questionSlice.actions;
 export default questionSlice.reducer;

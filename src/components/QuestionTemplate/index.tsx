@@ -17,8 +17,10 @@ import { MdDelete } from "@react-icons/all-files/md/MdDelete";
 import { MdContentCopy } from "@react-icons/all-files/md/MdContentCopy";
 import { MdCheckBoxOutlineBlank } from "@react-icons/all-files/md/MdCheckBoxOutlineBlank";
 import { MdCheckBox } from "@react-icons/all-files/md/MdCheckBox";
+import { MdDragHandle } from "@react-icons/all-files/md/MdDragHandle";
 import { StyleSheetManager } from "styled-components";
 import isPropValid from "@emotion/is-prop-valid";
+import { DraggableProvided } from "react-beautiful-dnd";
 
 interface QuestionTemplateProps {
   id: number;
@@ -27,6 +29,7 @@ interface QuestionTemplateProps {
   isRequired: boolean;
   hasOptions: boolean;
   options?: QuestionOptionProps[];
+  provided?: DraggableProvided;
 }
 
 const QuestionTemplate = ({
@@ -36,6 +39,7 @@ const QuestionTemplate = ({
   isRequired,
   hasOptions,
   options = [],
+  provided,
 }: QuestionTemplateProps) => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -69,7 +73,10 @@ const QuestionTemplate = ({
 
   return (
     <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
-      <S.QuestionContainer $isPreview={isPreview}>
+      <S.QuestionContainer
+        $isPreview={isPreview}
+        {...provided?.dragHandleProps}
+      >
         <S.QuestionCreator>
           {isPreview ? (
             <div>

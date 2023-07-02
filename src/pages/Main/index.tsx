@@ -5,7 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateFormDescription, updateFormTitle } from "../../reducers/form";
 import QuestionTemplate from "../../components/QuestionTemplate";
 import { RootState } from "../../store";
-import { addQuestion } from "../../reducers/question";
+import { addQuestion, dragQuestion } from "../../reducers/question";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "react-beautiful-dnd";
+
 const Main = () => {
   const SHORT_ANSWER_TYPE = "SHORT_ANSWER_TYPE";
   const dispatch = useDispatch();
@@ -47,31 +54,68 @@ const Main = () => {
     }
   };
 
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+    let from = source.index;
+    let to = destination?.index;
+
+    dispatch(
+      dragQuestion({
+        from,
+        to,
+      })
+    );
+  };
+
   return (
     <S.MainContainer ref={scrollRef}>
-      <TitleContainer
-        formPreferences={formPreferences}
-        handleOnChange={handleOnChangeFormPreferences}
-        handleOnBlur={handleOnBlur}
-      />
-      {questions &&
-        questions.length > 0 &&
-        questions.map((item) => (
-          <QuestionTemplate
-            key={item.id}
-            id={item.id}
-            qType={item.qType}
-            query={item.query}
-            isRequired={item.isRequired}
-            hasOptions={item.hasOptions}
-            options={item.options}
-          />
-        ))}
+      <DragDropContext onDragEnd={onDragEnd}>
+        <TitleContainer
+          formPreferences={formPreferences}
+          handleOnChange={handleOnChangeFormPreferences}
+          handleOnBlur={handleOnBlur}
+        />
+        <Droppable droppableId="droppable-id">
+          {(provided) => (
+            <div className="drag_container" ref={provided.innerRef}>
+              {questions &&
+                questions.length > 0 &&
+                questions.map((item, index) => (
+                  <Draggable
+                    key={item.id}
+                    draggableId={`draggableId-${index}`}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <div
+                        className="drag_wrapper"
+                        key={item.id}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <QuestionTemplate
+                          id={item.id}
+                          qType={item.qType}
+                          query={item.query}
+                          isRequired={item.isRequired}
+                          hasOptions={item.hasOptions}
+                          options={item.options}
+                          provided={provided}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
 
-      <a href="/preview" target="_blank">
-        <S.PreviewButton />
-      </a>
-      <S.AddButton onClick={handleOnClickAddQuestion} />
+        <a href="/preview" target="_blank">
+          <S.PreviewButton />
+        </a>
+        <S.AddButton onClick={handleOnClickAddQuestion} />
+      </DragDropContext>
     </S.MainContainer>
   );
 };

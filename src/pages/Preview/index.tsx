@@ -8,11 +8,6 @@ const Preview = () => {
   const { title, description } = useSelector((state: RootState) => state.form);
   const questions = useSelector((state: RootState) => state.question);
 
-  React.useEffect(() => {
-    console.log("hello/");
-    console.log(questions);
-  }, [questions]);
-
   return (
     <S.PreviewContainer>
       <TitleContainer
