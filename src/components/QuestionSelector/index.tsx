@@ -10,6 +10,7 @@ import { MdArrowDropDownCircle } from "@react-icons/all-files/md/MdArrowDropDown
 import { MdArrowDropDown } from "@react-icons/all-files/md/MdArrowDropDown";
 import { StyleSheetManager } from "styled-components";
 import isPropValid from "@emotion/is-prop-valid";
+
 interface QuestionSelectorProps {
   handleUpdateQuestionType: (value: string) => void;
   questionType: string;
@@ -45,7 +46,6 @@ const QuestionSelector = ({
     if (selectedType) {
       return selectedType.id - 1;
     }
-
     return 0;
   };
 
@@ -59,14 +59,14 @@ const QuestionSelector = ({
           </span>
           <MdArrowDropDown size="20" />
         </div>
-        <S.SelectOptions $show={showOptions ? "true" : "false"}>
+        <S.SelectOptions $isShow={showOptions}>
           {questions.map((data, index) => (
             <S.Option
               key={data.qType}
-              $type={data.qType}
+              type={data.qType}
               value={data.name}
               onClick={handleOnChangeSelectValue}
-              $current={currentValue === data.name ? "current" : ""}
+              $isCurrent={currentValue === data.name}
             >
               {icons[index]} {data.name}
             </S.Option>

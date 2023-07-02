@@ -1,12 +1,8 @@
 import { styled } from "styled-components";
 
-interface SelectBoxProps {
-  $show: string;
-}
-
 interface SelectOptionProps {
-  $current: string;
-  $type: string;
+  $isCurrent: boolean;
+  type: string;
 }
 
 export const SelectBox = styled.div`
@@ -34,7 +30,7 @@ export const SelectBox = styled.div`
   }
 `;
 
-export const SelectOptions = styled.ul<SelectBoxProps>`
+export const SelectOptions = styled.ul<{ $isShow: boolean }>`
   position: absolute;
   list-style: none;
   top: -3rem;
@@ -42,7 +38,7 @@ export const SelectOptions = styled.ul<SelectBoxProps>`
   width: 100%;
   overflow: hidden;
   height: 15rem;
-  max-height: ${(props) => (props.$show === "true" ? "none" : "0")};
+  max-height: ${(props) => (props.$isShow ? "none" : "0")};
   padding: 0;
   border-radius: 8px;
   background-color: white;
@@ -55,7 +51,7 @@ export const Option = styled.li<SelectOptionProps>`
   height: 3rem;
   padding: 0.5rem 1.625rem 0.5rem 1rem;
   background-color: ${(props) =>
-    props.$current === "current" ? "#EFF4FD" : "transparent"};
+    props.$isCurrent ? "#EFF4FD" : "transparent"};
   &:hover {
     background-color: #eeeeee;
   }
