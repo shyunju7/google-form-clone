@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as S from "./style";
 import { useLocation } from "react-router-dom";
+import { StyleSheetManager } from "styled-components";
+import isPropValid from "@emotion/is-prop-valid";
 
 interface TextualQuestionProps {
   qType: string;
@@ -21,25 +23,25 @@ const TextualQuestion = ({ qType }: TextualQuestionProps) => {
   };
 
   return (
-    <div>
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
       {isShortType ? (
         <S.TextInput
           type="text"
-          path={location.pathname}
+          $isMain={isMain}
           readOnly={isMain}
           placeholder={isMain ? "단답형 텍스트" : "내 답변"}
         />
       ) : (
         <S.Textarea
           ref={textarea}
-          path={location.pathname}
+          $isMain={isMain}
           readOnly={isMain}
           placeholder={isMain ? "장문형 텍스트" : "내 답변"}
           rows={1}
           onChange={handleResizeTextArea}
         />
       )}
-    </div>
+    </StyleSheetManager>
   );
 };
 

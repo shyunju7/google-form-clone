@@ -8,6 +8,8 @@ import { MdCheckBox } from "@react-icons/all-files/md/MdCheckBox";
 import { MdRadioButtonChecked } from "@react-icons/all-files/md/MdRadioButtonChecked";
 import { MdArrowDropDownCircle } from "@react-icons/all-files/md/MdArrowDropDownCircle";
 import { MdArrowDropDown } from "@react-icons/all-files/md/MdArrowDropDown";
+import { StyleSheetManager } from "styled-components";
+import isPropValid from "@emotion/is-prop-valid";
 interface QuestionSelectorProps {
   handleUpdateQuestionType: (value: string) => void;
   questionType: string;
@@ -31,11 +33,8 @@ const QuestionSelector = ({
   const [showOptions, setShowOptions] = React.useState(false);
   const handleOnChangeSelectValue = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
-    console.log(target);
     const value = target.getAttribute("value");
     const type = target.getAttribute("type");
-    console.log("v: ", value);
-    console.log("t: ", type);
     if (!value || !type) return;
     setCurrentValue(value || "");
     handleUpdateQuestionType(type || "");
@@ -51,28 +50,30 @@ const QuestionSelector = ({
   };
 
   return (
-    <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
-      <div className="label_wrapper">
-        <span className="label_wrapper">
-          {icons[handleMakeIcon()]}
-          <label>{currentValue}</label>
-        </span>
-        <MdArrowDropDown size="20" />
-      </div>
-      <S.SelectOptions show={showOptions ? "true" : "false"}>
-        {questions.map((data, index) => (
-          <S.Option
-            key={data.qType}
-            type={data.qType}
-            value={data.name}
-            onClick={handleOnChangeSelectValue}
-            current={currentValue === data.name ? "current" : ""}
-          >
-            {icons[index]} {data.name}
-          </S.Option>
-        ))}
-      </S.SelectOptions>
-    </S.SelectBox>
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+      <S.SelectBox onClick={() => setShowOptions((prev) => !prev)}>
+        <div className="label_wrapper">
+          <span className="label_wrapper">
+            {icons[handleMakeIcon()]}
+            <label>{currentValue}</label>
+          </span>
+          <MdArrowDropDown size="20" />
+        </div>
+        <S.SelectOptions $show={showOptions ? "true" : "false"}>
+          {questions.map((data, index) => (
+            <S.Option
+              key={data.qType}
+              $type={data.qType}
+              value={data.name}
+              onClick={handleOnChangeSelectValue}
+              $current={currentValue === data.name ? "current" : ""}
+            >
+              {icons[index]} {data.name}
+            </S.Option>
+          ))}
+        </S.SelectOptions>
+      </S.SelectBox>
+    </StyleSheetManager>
   );
 };
 

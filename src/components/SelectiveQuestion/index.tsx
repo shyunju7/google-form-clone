@@ -27,8 +27,9 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
         name: nOption,
       })
     );
-    setNOtion(""); // clear
+    setNOtion("");
   };
+
   const handleMakeOptions = (): React.ReactNode => {
     switch (qType) {
       case "MULTIPLE_CHOICE_TYPE":
@@ -57,7 +58,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
             ))}
             {!isPreview && (
               <div>
-                <input type="radio" />
+                {/* <input type="radio" /> */}
                 <input
                   className="add_option_input"
                   type="text"
@@ -97,6 +98,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
             ))}
             {!isPreview && (
               <div>
+                {/* <input type="checkbox" /> */}
                 <input
                   className="add_option_input"
                   type="text"
@@ -147,6 +149,7 @@ const SelectiveQuestion = ({ id, qType, options }: SelectiveQuestionProps) => {
         return;
     }
   };
+
   return (
     <S.SelectiveQuestionContainer>
       {handleMakeOptions()}

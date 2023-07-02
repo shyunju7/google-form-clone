@@ -1,13 +1,13 @@
 import { styled } from "styled-components";
 
-export const QuestionContainer = styled.div<{ path: string }>`
+export const QuestionContainer = styled.div<{ $isPreview: boolean }>`
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: ${(props) =>
-    props.path === "/"
-      ? "1.375rem 1.5rem 0 1.5rem"
-      : "1.375rem 1.5rem 1.5rem 1.5rem"};
+    props.$isPreview
+      ? "1.375rem 1.5rem 1.5rem 1.5rem"
+      : "1.375rem 1.5rem 0 1.5rem"};
   background-color: white;
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);

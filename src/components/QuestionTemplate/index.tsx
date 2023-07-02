@@ -17,6 +17,8 @@ import { MdDelete } from "@react-icons/all-files/md/MdDelete";
 import { MdContentCopy } from "@react-icons/all-files/md/MdContentCopy";
 import { MdCheckBoxOutlineBlank } from "@react-icons/all-files/md/MdCheckBoxOutlineBlank";
 import { MdCheckBox } from "@react-icons/all-files/md/MdCheckBox";
+import { StyleSheetManager } from "styled-components";
+import isPropValid from "@emotion/is-prop-valid";
 
 interface QuestionTemplateProps {
   id: number;
@@ -66,75 +68,77 @@ const QuestionTemplate = ({
   };
 
   return (
-    <S.QuestionContainer path={location.pathname}>
-      <S.QuestionCreator>
-        {isPreview ? (
-          <div>
-            {queryValue}
-            <span className="required_indicator">{isRequired && "*"}</span>
-          </div>
+    <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
+      <S.QuestionContainer $isPreview={isPreview}>
+        <S.QuestionCreator>
+          {isPreview ? (
+            <div>
+              {queryValue}
+              <span className="required_indicator">{isRequired && "*"}</span>
+            </div>
+          ) : (
+            <input
+              id={`question_${id}`}
+              className={`question_input question_input_main}`}
+              type="text"
+              placeholder="질문"
+              value={queryValue}
+              readOnly={isPreview}
+              onChange={handleOnChangeValue}
+              onBlur={() => {
+                dispatch(
+                  updateQuestionQuery({
+                    id,
+                    query: queryValue,
+                  })
+                );
+              }}
+            />
+          )}
+          {!isPreview && (
+            <QuestionSelector
+              handleUpdateQuestionType={handleUpdateQuestionType}
+              questionType={questionType}
+            />
+          )}
+        </S.QuestionCreator>
+        {!hasOptions ? (
+          <TextualQuestion qType={questionType} />
         ) : (
-          <input
-            id={`question_${id}`}
-            className={`question_input question_input_main}`}
-            type="text"
-            placeholder="질문"
-            value={queryValue}
-            readOnly={isPreview}
-            onChange={handleOnChangeValue}
-            onBlur={() => {
-              dispatch(
-                updateQuestionQuery({
-                  id,
-                  query: queryValue,
-                })
-              );
-            }}
-          />
+          <SelectiveQuestion id={id} qType={questionType} options={options} />
         )}
         {!isPreview && (
-          <QuestionSelector
-            handleUpdateQuestionType={handleUpdateQuestionType}
-            questionType={questionType}
-          />
-        )}
-      </S.QuestionCreator>
-      {!hasOptions ? (
-        <TextualQuestion qType={questionType} />
-      ) : (
-        <SelectiveQuestion id={id} qType={questionType} options={options} />
-      )}
-      {!isPreview && (
-        <S.QuestionFooter>
-          <div className="question_footer_wrapper">
-            <MdContentCopy
-              size="24"
-              color="var(--hint-text-color)"
-              onClick={handleOnClickCopyButton}
-            />
-            <MdDelete
-              size="24"
-              color="var(--hint-text-color)"
-              onClick={handleOnClickDeleteButton}
-            />
-            <div
-              className="question_footer_required_label"
-              onClick={handleOnClickRequiredButton}
-            >
-              필수
-              {requiredValue ? (
-                <MdCheckBox size="24" />
-              ) : (
-                <MdCheckBoxOutlineBlank
-                  size="24"
-                  color="var(--hint-text-color)"
-                />
-              )}
+          <S.QuestionFooter>
+            <div className="question_footer_wrapper">
+              <MdContentCopy
+                size="24"
+                color="var(--hint-text-color)"
+                onClick={handleOnClickCopyButton}
+              />
+              <MdDelete
+                size="24"
+                color="var(--hint-text-color)"
+                onClick={handleOnClickDeleteButton}
+              />
+              <div
+                className="question_footer_required_label"
+                onClick={handleOnClickRequiredButton}
+              >
+                필수
+                {requiredValue ? (
+                  <MdCheckBox size="24" />
+                ) : (
+                  <MdCheckBoxOutlineBlank
+                    size="24"
+                    color="var(--hint-text-color)"
+                  />
+                )}
+              </div>
             </div>
-          </div>
-        </S.QuestionFooter>
-      )}
-    </S.QuestionContainer>
+          </S.QuestionFooter>
+        )}
+      </S.QuestionContainer>
+    </StyleSheetManager>
   );
 };
 export default QuestionTemplate;
