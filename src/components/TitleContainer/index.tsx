@@ -28,7 +28,7 @@ const TitleContainer = ({
       <S.TitleWrapper>
         <S.Input
           className="input_title"
-          $isPreview={isPreview}
+          $isPreview={!isPreview}
           type="text"
           placeholder="설문지 제목"
           value={title}
@@ -42,7 +42,7 @@ const TitleContainer = ({
         />
         <S.Input
           className="input_description"
-          $isPreview={isPreview}
+          $isPreview={!isPreview}
           type="text"
           placeholder="설문지 설명"
           value={description}
