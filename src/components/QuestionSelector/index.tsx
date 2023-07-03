@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as S from "./style";
 import { questions } from "../../data/questionList";
 import { questionTypes } from "../../data/questionTypes";
@@ -28,10 +28,10 @@ const QuestionSelector = ({
   handleUpdateQuestionType,
   questionType,
 }: QuestionSelectorProps) => {
-  const [currentValue, setCurrentValue] = React.useState(
+  const [currentValue, setCurrentValue] = useState<string>(
     questionTypes[questionType]
   );
-  const [showOptions, setShowOptions] = React.useState(false);
+  const [showOptions, setShowOptions] = useState<boolean>(false);
   const handleOnChangeSelectValue = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     const value = target.getAttribute("value");
@@ -68,7 +68,8 @@ const QuestionSelector = ({
               onClick={handleOnChangeSelectValue}
               $isCurrent={currentValue === data.name}
             >
-              {icons[index]} {data.name}
+              {icons[index]}
+              <label>{data.name}</label>
             </S.Option>
           ))}
         </S.SelectOptions>

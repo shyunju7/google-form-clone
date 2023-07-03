@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef, useState } from "react";
 import * as S from "./style";
 import TitleContainer from "../../components/TitleContainer";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,10 +20,13 @@ const Main = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const questions = useSelector((state: RootState) => state.question);
   const { title, description } = useSelector((state: RootState) => state.form);
-  const [formPreferences, setFormPreferences] = React.useState({
+  const [formPreferences, setFormPreferences] = useState<{
+    title: string;
+    description: string;
+  }>({
     title,
     description,
   });

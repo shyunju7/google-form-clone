@@ -43,10 +43,12 @@ export const SelectOptions = styled.ul<{ $isShow: boolean }>`
   border-radius: 8px;
   background-color: white;
   color: var(--text-color);
-
+  z-index: 10;
   box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.3);
 `;
 export const Option = styled.li<SelectOptionProps>`
+  display: flex;
+  align-items: center;
   font-size: 1rem;
   height: 3rem;
   padding: 0.5rem 1.625rem 0.5rem 1rem;
