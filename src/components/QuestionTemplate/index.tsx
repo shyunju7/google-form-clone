@@ -21,6 +21,7 @@ import { MdDragHandle } from "@react-icons/all-files/md/MdDragHandle";
 import { StyleSheetManager } from "styled-components";
 import isPropValid from "@emotion/is-prop-valid";
 import { DraggableProvided } from "react-beautiful-dnd";
+import ToggleButton from "../ToggleButton";
 
 interface QuestionTemplateProps {
   id: number;
@@ -69,6 +70,10 @@ const QuestionTemplate = ({
   const handleOnClickRequiredButton = () => {
     setRequiredValue((prev) => !prev);
     dispatch(changeRequiredProperty({ id }));
+  };
+
+  const handleSetToggleValue = () => {
+    setRequiredValue((value: boolean) => !value);
   };
 
   return (
@@ -132,14 +137,10 @@ const QuestionTemplate = ({
                 onClick={handleOnClickRequiredButton}
               >
                 필수
-                {requiredValue ? (
-                  <MdCheckBox size="24" />
-                ) : (
-                  <MdCheckBoxOutlineBlank
-                    size="24"
-                    color="var(--hint-text-color)"
-                  />
-                )}
+                <ToggleButton
+                  requiredValue={requiredValue}
+                  handleSetToggleValue={handleSetToggleValue}
+                />
               </div>
             </div>
           </S.QuestionFooter>
