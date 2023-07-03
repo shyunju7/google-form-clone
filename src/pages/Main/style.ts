@@ -5,19 +5,50 @@ export const MainContainer = styled.div`
   position: relative;
   width: 100%;
   max-width: 48.125rem;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 0.75rem;
-  margin: 0 auto;
+  margin: 7.5rem auto 2rem auto;
   background-color: transparent;
 
   .drag_container {
     width: 100%;
     max-width: 48.125rem;
   }
+
+  .main_header {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    background-color: white;
+    z-index: 100;
+    border-bottom: 1px solid #dadce0;
+  }
+
+  .main_menu_top {
+    width: 100%;
+    height: 3.75rem;
+  }
+
+  .main_menu_bottom {
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+export const MenuItem = styled.li<{ $isCurrentTab: boolean }>`
+  display: inline-block;
+  margin: 0 0.25rem;
+  font-size: 0.875rem;
+  line-height: 2.25rem;
+  font-weight: ${(props) => (props.$isCurrentTab ? "bold" : "500")};
+
+  cursor: pointer;
+  color: ${(props) =>
+    props.$isCurrentTab ? "var(--primary-color)" : "var(--text-color)"};
 `;
 
 export const AddButton = styled(MdAddCircleOutline)`

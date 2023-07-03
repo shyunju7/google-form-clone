@@ -6,16 +6,20 @@ import { updateFormDescription, updateFormTitle } from "../../reducers/form";
 import QuestionTemplate from "../../components/QuestionTemplate";
 import { RootState } from "../../store";
 import { addQuestion, dragQuestion } from "../../reducers/question";
+import { useNavigate } from "react-router-dom";
 import {
   DragDropContext,
   Droppable,
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import { useLocation } from "react-router-dom";
 
 const Main = () => {
   const SHORT_ANSWER_TYPE = "SHORT_ANSWER_TYPE";
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const questions = useSelector((state: RootState) => state.question);
   const { title, description } = useSelector((state: RootState) => state.form);
@@ -69,6 +73,30 @@ const Main = () => {
 
   return (
     <S.MainContainer ref={scrollRef}>
+      <div className="main_header">
+        <div className="main_menu_top" />
+        <div className="main_menu_bottom">
+          <ul>
+            <S.MenuItem
+              $isCurrentTab={location.pathname === "/"}
+              onClick={() => navigate("/")}
+            >
+              질문
+            </S.MenuItem>
+            <S.MenuItem
+              $isCurrentTab={location.pathname === "/result"}
+              onClick={() => navigate("/result")}
+            >
+              응답
+            </S.MenuItem>
+            <S.MenuItem $isCurrentTab={location.pathname === "/preview"}>
+              <a href="/preview" target="_blank">
+                미리보기
+              </a>
+            </S.MenuItem>
+          </ul>
+        </div>
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <TitleContainer
           formPreferences={formPreferences}
@@ -111,9 +139,6 @@ const Main = () => {
           )}
         </Droppable>
 
-        <a href="/preview" target="_blank">
-          <S.PreviewButton />
-        </a>
         <S.AddButton onClick={handleOnClickAddQuestion} />
       </DragDropContext>
     </S.MainContainer>

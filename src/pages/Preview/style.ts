@@ -8,6 +8,6 @@ export const PreviewContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding-top: 0.75rem;
-  margin: 0 auto;
+  margin: 1rem auto;
   background-color: transparent;
 `;
