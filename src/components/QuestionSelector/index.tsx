@@ -32,10 +32,19 @@ const QuestionSelector = ({
     questionTypes[questionType]
   );
   const [showOptions, setShowOptions] = useState<boolean>(false);
+
   const handleOnChangeSelectValue = (e: React.MouseEvent<HTMLElement>) => {
-    const target = e.target as HTMLElement;
+    let target = e.target as HTMLElement;
+
+    if (target.tagName !== "LI") {
+      const parent = target.closest("li");
+      if (!parent) return;
+      target = parent;
+    }
+
     const value = target.getAttribute("value");
     const type = target.getAttribute("type");
+
     if (!value || !type) return;
     setCurrentValue(value || "");
     handleUpdateQuestionType(type || "");
