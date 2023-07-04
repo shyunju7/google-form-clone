@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as S from "./style";
 import TitleContainer from "../../components/TitleContainer";
 import { useDispatch, useSelector } from "react-redux";

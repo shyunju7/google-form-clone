@@ -41,7 +41,7 @@ export const MainContainer = styled.div`
 
 export const MenuItem = styled.li<{ $isCurrentTab: boolean }>`
   display: inline-block;
-  margin: 0 0.25rem;
+  margin: 0 0.5rem;
   font-size: 0.875rem;
   line-height: 2.25rem;
   font-weight: ${(props) => (props.$isCurrentTab ? "bold" : "500")};
