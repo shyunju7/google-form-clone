@@ -7,15 +7,26 @@ export const TitleWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 1.375rem 0rem 1.5rem 0rem;
+  padding-bottom: 1.5rem;
   background-color: white;
   border-radius: 0.5rem;
   border: 1px solid var(--border-color);
-  border-top: 12px solid var(--primary-color); // 임시 타이틀 엣지
   box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.2);
 `;
 
-export const Input = styled.input<{ $isPreview: boolean }>`
+export const Border = styled.div`
+  width: calc(100% + 0.125rem);
+  height: 0.75rem;
+  background-color: var(--primary-color);
+  margin-bottom: 1.375rem;
+  box-sizing: content-box;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+`;
+
+export const Input = styled.input<{
+  $isPreview: boolean;
+}>`
   width: 100%;
   max-width: 45rem;
   border: none;

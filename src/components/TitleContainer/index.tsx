@@ -26,6 +26,7 @@ const TitleContainer = ({
   return (
     <StyleSheetManager shouldForwardProp={(prop) => isPropValid(prop)}>
       <S.TitleWrapper>
+        <S.Border />
         <S.Input
           className="input_title"
           $isPreview={!isPreview}
