@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import * as S from "./style";
 import { useLocation } from "react-router-dom";
 import { StyleSheetManager } from "styled-components";
